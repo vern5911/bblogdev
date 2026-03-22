@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>EDIT Blog#: {{item[0]}}</h2><br/>
+<form method="POST" action="{{ url_for( 'edit', number=item[0] ) }}">
+    <h4>Date    : <input name="Bdate" size="10"; value="{{item[1]}}" readonly/></h3></br>
+    <h4>Book    : <input name="Book" size="10"; value="{{item[2]}}" readonly/></h3></br>
+    <h4>Chapter : <input name="Chapter" size="5"; value="{{item[3]}}" readonly/></h3></br>
+    <h4>Feedback: <textarea name="Feedback" rows="8" cols="80" autofocus required 
+        style="font-style: italic;" value="{{item[4]}}"/></textarea></h4></br>
+    <button>UPDATE</button></br>
+</form>
+{% endblock %}

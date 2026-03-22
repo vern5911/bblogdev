@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+   <h3>Edit Blog Post</h3>
+   <form action="/edit" method="POST">
+      <label>Post Date</label>
+      <label>type="text" name="Bdate" value="{{bpost.Bdate}}">{{ bpost.Bdate}}</label>
+      <br/>
+      <label>{{ bpost.Book }} : {{ bpost.Chapter }}</label>
+      <br/>
+      <label>Feedback:</label>
+      <textarea autofocus name="Feedback" id="Feedback"
+         rows="8" cols="80" style="text-align:left" required 
+         value="{{ request.form['Feedback'] or bpost[4] }}">{{ bpost.Feedback  or '' }}
+      </textarea>
+      <button type="submit">SUBMIT</button>
+   </form>
+
+{% endblock%}

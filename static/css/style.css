@@ -1,0 +1,22 @@
+h1 {
+	color: darkblue;
+	font-size:60px;
+}
+
+body {
+	background: #f4f4f4;
+}
+
+#demo{
+	font-size: 12px;
+	color: darkblue;
+}
+textarea {
+    font-family: Arial, sans-serif;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+input[type="text"] {
+    font-size:25px;
+}

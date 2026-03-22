@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   <title>{% block title %}{%endblock%}</title>
+      <h3>Bible Blog Posts</h3>
+      <a href="/edit">Edit_Post</a>
+      <br>
+      <table>
+         <colgroup>
+         <thead>
+            <th>Id</th>
+            <th>Date</th>
+            <th>Book</th>
+            <th>Chapter</th>
+            <th>Feedback</th>
+            <th>#</th>
+         </thead>
+         <tbody>
+            <td>{{bpost.Bid}}</td>
+            <td>{{bpost.Bdate}}</td>
+            <td>{{bpost.Book}}</td>
+            <td>{{bpost.Chapter}}</td>
+            <td>{{bpost.Feedback}}</td>
+            <td><a href="{{ url_for('edit_fb', id=bpost['Bid'] }}" class='btn btn-primary' role='button'><button>EDIT</button></a></td>
+         </tbody>
+      </table>
+   </body>
+</html>
+
+{% endblock %}

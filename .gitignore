@@ -1,0 +1,5 @@
+*.log
+*.tmp
+.ve
+*.sqlite3
+__py*
