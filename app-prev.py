@@ -2,36 +2,20 @@
 # Source - https://stackoverflow.com/a/67474104
 # Posted by furas, modified by community. See post 'Timeline' for change history
 # Retrieved 2026-03-21, License - CC BY-SA 4.0
-# Updates:
-# 2Apr2026	- Added wtforms for security and CRSF token to edit.html
-from flask import Flask, render_template, request, render_template_string, redirect
-from flask import Flask, render_template, redirect, url_for
-from flask_wtf import FlaskForm, CSRFProtect
-from wtforms import SubmitField, TextAreaField
-from wtforms.validators import DataRequired
-import sqlite3 as sql
-import os
 
-secret_key = os.urandom(24)
+from flask import Flask, render_template, request, render_template_string, redirect
+import sqlite3 as sql
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = secret_key
-
-# Flask-WTF requires this line
-csrf = CSRFProtect(app)
 
 DB_PATH = 'bibleblog.sqlite3'       # sqlite3 DB file
-
-class BblogForm(FlaskForm):
-    feedback = TextAreaField('Feedback', validators=[DataRequired()])
-    submit = SubmitField('Submit')
 
 def create_database():
     conn = sql.connect(DB_PATH)
     cur = conn.cursor()
 
     cur.execute("""
-                CREATE TABLE IF NOT EXISTS bblogtest (
+                CREATE TABLE IF NOT EXISTS bblog2428 (
                     Bid INTEGER PRIMARY KEY AUTOINCREMENT,
                     Bdate TEXT,
                     Book TEXT,
@@ -49,7 +33,7 @@ def generate_data():
     cur = conn.cursor()
 
     for i in range(1, 11):
-        cur.execute("""INSERT INTO bblogtest (Bdate, Book, Chapter, Feedback) VALUES (?, ?, ?, ?)""", 
+        cur.execute("""INSERT INTO bblog2428 (Bdate, Book, Chapter, Feedback) VALUES (?, ?, ?, ?)""", 
                     (f"Bdate {i}", f"Book {i}", f"Chapter {i}", f"Feedback {i}"))
 
     conn.commit()
@@ -67,25 +51,22 @@ def about():
 
 @app.route('/list')
 def list():
-    # Set the WTF form to validate input and introduce security (CRSF token)
-    form = BblogForm()
 
-    # Setup connection to DB
     conn = sql.connect(DB_PATH)
     cur = conn.cursor()
 
     # Get lasted Blog Id of unedited Feedback
     sql1 = "SELECT MIN(Bid) FROM bblog2428 WHERE Feedback IS NULL ORDER BY Bid ASC"
     next_id = cur.execute(sql1).fetchone()[0] 
-    prev_id=next_id-4; last_id = next_id + 30    
-
+    prev_id=next_id-1
     # Get the previously edited and remaining unedited records from the DB Table
-    cur.execute("SELECT * FROM  bblog2428 WHERE Bid >= ? AND Bid <=?",(prev_id, last_id))
+    sql2 = "SELECT * FROM  bblog2428 WHERE Bid >= ?"
+    cur.execute(sql2, (prev_id,))
     bposts = cur.fetchall()
 
     conn.close()
 
-    return render_template("list.html", form=form, bposts=bposts)
+    return render_template("list.html", bposts=bposts)
     #return render_template_string(template_list, bposts=bposts)
 
 
@@ -102,8 +83,8 @@ def edit(number):
         item_chapter  = request.form['Chapter']
         item_feedback = request.form['Feedback']
     
-        cur.execute("UPDATE bblog2428 SET Bdate = ?, Book = ?, Chapter = ?, Feedback = ? WHERE Bid = ?",
-                    (item_bdate, item_book, item_chapter, item_feedback, item_bid))
+        cur.execute("UPDATE bblog2428 SET Feedback = ? WHERE Bid = ?",
+                    (item_feedback, _item_bid))
         conn.commit()
         
         return redirect('/list') 
@@ -121,7 +102,7 @@ def delete(number):
 
     conn = sql.connect(DB_PATH)
     cur = conn.cursor()
-
+        
     cur.execute("DELETE FROM bblog2428 WHERE Bid = ?", (number,))
 
     conn.commit()
@@ -130,7 +111,7 @@ def delete(number):
 
     return redirect('/list')
 
-
+@app.route('/add', methods=['GET', 'POST'])
 def add():
 
     conn = sql.connect(DB_PATH)
@@ -142,11 +123,11 @@ def add():
         item_receipt = request.form['Book']
         item_amount  = request.form['Chapter']
         item_description = request.form['Feedback']
-        
+
         cur.execute("""INSERT INTO bblog2428 (Bdate, Book, Chapter, Feedback) VALUES (?, ?, ?, ?)""", 
                     (item_bdate, item_book, item_chapter, item_feedback))
         conn.commit()
-        
+
         return redirect('/list', Title=Title) 
         
     return render_template("add.html", item=item)
@@ -169,4 +150,3 @@ if __name__ == '__main__':
     create_database()
     #generate_data()
     app.run(debug=True)
-

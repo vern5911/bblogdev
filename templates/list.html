@@ -2,33 +2,35 @@
 
 {% block content %}
 {% block title %}{{Title}}{% endblock %}<br/>
-<h1>LIST</h1>
-{% if rows %}
+<h1>Bible Blog List</h1>
+{% if bposts %}
 <table border="1" width="100%">
     <colgroup>
         <col span="1" style="width: 5%;">
+        <col span="1" style="width: 20%;">
         <col span="1" style="width: 10%;">
-        <col span="1" style="width: 10%;">
-        <col span="1" style="width: 7%;">
-        <col span="1" style="width: 68%;">
+        <col span="1" style="width: 4%;">
+        <col span="1" style="width: 50%;">
+        <col span="1" style="width: 8%;">
     </colgroup>
-    <thead>
-        <td>Id</td>
-        <td>Date</td>
-        <td>Book</td>
-        <td>Chapte</td>
-        <td>Feedback</td>
-        <td>Action</td>
+    <thead style="font-weight: 700;">
+        <td style="text-align: center;">Id</td>
+        <td style="text-align: center;">Date</td>
+        <td style="text-align: center;">Book</td>
+        <td style="text-align: center;">Chapter</td>
+        <td style="text-align: center;">Feedback</td>
+        <td style="text-align: center;">Action</td>
     </thead>
-    {% for row in rows %}
+    {% for bpost in bposts %}
         <tr>
-            <td>{{row[0]}}</td>
-            <td>{{row[1]}}</td>
-            <td>{{row[2]}}</td>
-            <td>{{row[3]}}</td>
-            <td><textarea rows="8" cols="100" style="font-style: italic;">{{row[4]}}</textarea></td>
+            <td>{{bpost[0]}}</td>
+            <td>{{bpost[1]}}</td>
+            <td>{{bpost[2]}}</td>
+            <td>{{bpost[3]}}</td>
+            <td><textarea bposts="10" cols="100" style="font-style: italic;">{{bpost[4]}}</textarea></td>
         <td>
-            <a href="{{ url_for( 'edit', number=row[0] ) }}">EDIT</a>
+            <a href="{{ url_for( 'edit', number=bpost[0] ) }}"><center>EDIT</center></a>
+
         </td>
     </tr>
     {% endfor %}  
@@ -36,6 +38,6 @@
 {% else %}
 Empty</br>
 {% endif %}
-<a href="{{ url_for( 'add' ) }}">ADD</a>
+<a href="{{ url_for( 'list') }}">LIST</a>
 
 {% endblock%}

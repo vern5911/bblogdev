@@ -1,0 +1,41 @@
+% extends 'base.html' %}
+
+{% block content %}
+   {% if bposts %}
+   <title>{% block title %}{%endblock%}</title>
+      <h3>Bible Blog Posts</h3>
+      <a href="/edit">Edit_Post</a>
+      <br>
+ 	<table border="1" width="100%">
+    	<colgroup>
+        	<col span="1" style="width: 5%;">
+        	<col span="1" style="width: 12%;">
+        	<col span="1" style="width: 10%;">
+        	<col span="1" style="width: 5%;">
+        	<col span="1" style="width: 57%;">
+        	<col span="1" style="width: 8%;">
+    	</colgroup>
+		<thead>
+        	<th>Id</th>
+            <th>Date</th>
+            <th>Book</th>
+            <th>Chapter</th>
+            <th>Feedback</th>
+            <th>Action</th>
+         </thead>
+         <tbody>
+         {% for bpost in bposts %}
+            <td>{{bpost[0]}}</td>
+            <td>{{bpost[1]}}</td>
+            <td>{{bpost[2]}}</td>
+            <td>{{bpost[3]}}</td>
+            <td><textarea bposts="10" cols="100" style="font-style: italic;">{{bpost[4]}}</textarea></td>
+            <a href="{{ url_for( 'edit', number=bpost[0] ) }}">EDIT</a>
+         {% endfor %}
+         </tbody>
+      </table>
+   </body>
+   {% endif %}
+</html>
+
+{% endblock %}

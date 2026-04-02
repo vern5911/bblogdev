@@ -1,22 +1,41 @@
-h1 {
+h2 {
 	color: darkblue;
-	font-size:60px;
+	font-size:50px;
 }
+
+h4 {
+	color: magenta;
+	font-size:25px;
+}
+
 
 body {
 	background: #f4f4f4;
 }
 
-#demo{
-	font-size: 12px;
-	color: darkblue;
-}
 textarea {
     font-family: Arial, sans-serif;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #B800020;
 }
 input[type="text"] {
     font-size:25px;
+}
+
+table{
+	border-collapse:collapse;
+	border:3px solid #FF0000;
+}
+
+table thead th {
+	font-weight: 2px solid #B4464B
+
+}
+
+table td{
+	border:1px solid #4683B4;
+}
+table tr{
+	height:auto;
 }

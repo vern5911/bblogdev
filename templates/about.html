@@ -2,6 +2,11 @@
 
 {% block content %}
 	{% block title %}Bibleblog | About me: {% endblock %}
-	<h2>Welcome to my first webpage!</h2>
+	<h2>Welcome to my Bible Blog webpage!</h2>
 	<p>My name is {{ full_name }}</p>
+	<br/><br/>
+	<div class="container">
+		<a href="{{ url_for('list') }}" class='btn btn-primary' role='button'/>
+		<button>RETURN</button></a>
+	</div>
 {% endblock %}
