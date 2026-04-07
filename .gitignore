@@ -1,6 +1,12 @@
 .gitignore
 *.log
 *.tmp
-.ve
+.ve/
 *.sqlite3
 __py*
+sync*
+*.ico
+bblog*
+.git/
+__pycache__/
+Bibleblog/
